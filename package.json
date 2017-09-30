@@ -1,15 +1,15 @@
 {
-  "name": "Xgame",
+  "name": "Angular dynamic form",
   "version": "1.0.0",
-  "description": "Xgame 管理系统",
-  "main": "index.html",
+  "description": "Angular动态表单",
+  "main": "./dist/index.html",
   "scripts": {
     "build": "gulp index"
   },
   "keywords": [
-    "Xgame"
+    "Angular","form","Angular form","Angular dynamic form"
   ],
-  "author": "7*",
+  "author": "zwq8299174",
   "license": "ISC",
   "devDependencies": {
     "amd-optimize": "^0.6.1",

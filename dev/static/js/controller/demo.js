@@ -351,8 +351,5 @@ define(['angular', 'text!tpl/demo.html', 'require', 'nprogress', 'sweetalert'], 
 			console.log($scope.formModel);
 		}
 	};
-	return {
-		controller: controller,
-		tpl: tpl
-	};
+	return {controller: controller, tpl: tpl};
 });

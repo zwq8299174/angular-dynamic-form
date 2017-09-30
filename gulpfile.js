@@ -49,7 +49,7 @@ function cssRplc(match, p1, p2, p3, offset, string) {
 	};
 };
 var header = '/*-----------------------\n' +
-	' * Site:  Kingnet - ' + projectDist + ' - {{ name }}\n' +
+	' * Site:  Angular dynamic form - {{ name }}\n' +
 	' * Author: Clearlove 7*\n' +
 	' * Updated: {{ date }}\n' +
 	' * Version: {{ version }}\n' +
@@ -121,7 +121,7 @@ gulp.task('update', function() {
 		.pipe(gulp.dest('./' + projectDist + '/static/'))
 });
 
-gulp.task('cssmin', function() {
+gulp.task('cssmin',['buildSass','font'],function() {
 	var name = 'main.min.css';
 	return gulp.src(['./' + project + '/static/css/**/**.css',
 			'!./' + project + '/static/css/theme/**.css',
@@ -172,18 +172,6 @@ gulp.task('watchService',function() {
 	.pipe(gulp.dest('./' + project + '/static/js/service/ES5/'));
 })
 
-gulp.task('theme', function() {
-	return gulp.src('./' + project + '/static/css/theme/**.css')
-		.pipe(minifycss({
-			keepSpecialComments: 0
-		}))
-		.pipe(insert.prepend(header))
-		.pipe(replace('{{ date }}', getDate(nowTime, 'yyyy-MM-dd HH:mm')))
-		.pipe(replace('{{ version }}', package.version))
-		.pipe(replace('{{ name }}', 'theme'))
-		.pipe(replace('../../', '../'))
-		.pipe(gulp.dest('./' + projectDist + '/static/css/theme/'))
-});
 
 gulp.task('fontrev', function() {
 	return gulp.src('./' + project + '/static/fonts/*.*')
@@ -193,10 +181,24 @@ gulp.task('fontrev', function() {
 		.pipe(gulp.dest('./' + project + '/static/rev/fonts/'));
 });
 
-gulp.task('css', ['cssmin', 'buildSass'], function() {
+gulp.task('font', function() {
+	return gulp.src('./' + project + '/static/fonts/*.*')
+		.pipe(gulp.dest('./' + projectDist + '/static/fonts/'));
+});
+
+
+
+gulp.task('css', ['cssmin', 'font'], function() {
 	return gulp.src(['./' + project + '/static/rev/fonts/*.json', './' + project + '/static/css/main.min.css'])
 		.pipe(revCollector())
 		.pipe(gulp.dest('./' + projectDist + '/static/css/'));
+});
+
+
+gulp.task('copy', function() {
+	return gulp.src(['./' + project + '/static/js/libs/require/require.min.js',
+		'./' + project + '/static/js/libs/other/jszip.js'])
+		.pipe(gulp.dest('./' + projectDist + '/static/js/'))
 });
 
 gulp.task('baseSet', function() {
@@ -274,7 +276,7 @@ gulp.task('configJs', function() {
 	return stream;
 });
 
-gulp.task('indexJs', ['ctrMini', 'routerClean', 'configJs'], function() {
+gulp.task('indexJs', ['ctrMini', 'routerClean', 'configJs','copy'], function() {
 	var stream, name;
 	name = 'main.min';
 	stream = gulp.src(['./' + projectDist + '/static/js/config.js',
@@ -324,7 +326,8 @@ gulp.task('index', ['indexJs', 'cssmin'], function() {
 			'css': './static/css/main.min.css?v={{ version }}',
 			'js': {
 				src: [
-					['./static/js/libs/require/require.min.js', './static/js/main.min.js?v={{ version }}']
+					['./static/js/jszip.js', ''],
+					['./static/js/require.min.js', './static/js/main.min.js?v={{ version }}']
 				],
 				tpl: '<script src="%s" data-main="%s"></script>'
 			}
