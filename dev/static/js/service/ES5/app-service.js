@@ -215,9 +215,9 @@ define(['angular', 'js.cookie', 'baseSet', 'jquery', 'sweetalert', 'Ps'], functi
 		};
 	});
 	appServices.service('appApi', ['$q', 'appHttp', function ($q, appHttp) {
-		this.kpiGetNav = function (suc, com, err) {
+		this.getProject = function (suc, com, err) {
 			appHttp.appGet({
-				url: baseSet.postServer + 'manager/kpi/getNav',
+				url: baseSet.postServer + 'mockService/dynamicForm',
 				success: suc,
 				complete: com,
 				error: err

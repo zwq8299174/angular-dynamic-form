@@ -1,12 +1,11 @@
 /*-----------------------
- * Site:  Angular dynamic form - build.css
+ * Site:  Kingnet - ./dist - build.css
  * Author: Clearlove 7*
- * Updated: 2017-09-30 11:12
+ * Updated: 2017-09-30 10:38
  * Version: 1.0.0
  * -----------------------*/
 body .dropdown-menu {
   max-height: 206px;
-  overflow-y: scroll;
   border: medium none;
   box-shadow: none;
   display: none;

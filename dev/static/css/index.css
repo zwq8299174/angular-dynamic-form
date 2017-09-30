@@ -11,15 +11,17 @@
 .dataTables_wrapper .dt-buttons{margin-right: 20px;}
 
 
-.filter-bar,.tools-bar{height: 51px;line-height: 50px;border-bottom:1px solid #c3cbd0;}
-.form-line {background-color: #fff;width: 100%;}
-.form-line .form-tag{width: 100px; text-align:center; border-right:1px solid #c3cbd0;float:left;}
+.filter-bar,.tools-bar{line-height: 50px;border-bottom:1px solid #c3cbd0;}
+.form-line {background-color: #fff;width: 100%;position: relative;}
+.form-line .form-left{width: 100px; text-align:center; border-right:1px solid #c3cbd0;position:absolute;height:100%;left:0;top:0;}
+.form-line .form-right{width: calc(100% - 100px);float:right;}
 .form-line .form-input{width: calc(100% - 100px);float:left;}
 .form-line .form-item{border-right:1px solid #c3cbd0;padding-right: 0;padding-left: 0;}
+.form-line .form-item.border{border-bottom:1px solid #c3cbd0;}
 .form-line .form-item.btn-wrap{padding:0 15px;}
 .form-line .form-item:last-child{border-right:none;}
 .form-line .form-item.pull-right{text-align: right;}
-.form-line .form-content{width:calc(100% - 100px);float:left;padding:0 20px;}
+.form-line .form-content{padding:0 20px;}
 .form-line .form-content.has-daterangepicker{padding:0;}
 .form-line .form-item:first-child{padding-left: 0;}
 .form-line .form-item.only{border-right:1px solid #c3cbd0;}
@@ -136,12 +138,12 @@
 .flt-checkbox-input .form-right .form-item .input-wrapper{width:calc(100% - 40px);margin-left:20px;}
 .flt-checkbox-input .form-right .form-item .input-wrapper>*{float:left;}
 .flt-checkbox-input .form-right .form-item .input-wrapper .bridge{text-align: center;}
-/*.checkbox-input .form-right .form-item .input-wrapper .unit{margin-right:20px;}*/
 
 
-.demo .filter-bar .form-left{float: left;width:100px;}
-.demo .filter-bar .form-left .form-tag{text-align: left;width: 100%;padding-left: 15px;}
-.demo .filter-bar .form-right{float:left;width: calc(100% - 100px);}
+
+
+
+
 .filter-bar .form-right .form-input{width: 100%;}
 .filter-bar .form-right .form-item:last-child{border-right: 1px solid #c3cbd0;}
 .flt-radio-date .date-range-picker-wrapper .daterangepicker{line-height:initial;min-width:682px;}

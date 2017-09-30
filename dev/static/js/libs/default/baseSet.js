@@ -1,6 +1,6 @@
 define(function() {
 	return {
-		postServer: 'http://117.50.8.212:9100/',
+		postServer: 'http://localhost:4567/',
 //		'./',// pro
 		pageHost: // test
 		"./../"

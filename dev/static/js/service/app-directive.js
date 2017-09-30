@@ -318,7 +318,7 @@ define(['angular', 'moment', 'jquery', 'Ps', 'daterange'], function(angular, mom
 						<div class="form-tag">{{data.itemName}}</div>
 					</div>
 					<div class="form-right">
-						<div class="form-item col-md-2 col-sm-12 col-xs-12" ng-repeat="condition in data.conditions">
+						<div class="form-item col-md-2 col-sm-12 col-xs-12" ng-repeat="condition in data.conditions" ng-class="{'border':setClass($index)}">
 							<div class="form-input transition-02">
 								<label class="clearfix"><input class="pull-left" type="checkbox" name="{{condition.val}}" value="{{condition}}" ng-checked="isChecked(condition)" ng-click="itemClick(condition,$index)" ng-model="tmp[$index]" /><span class="pull-left">{{condition.display}}</span></label>
 							</div>
@@ -371,6 +371,17 @@ define(['angular', 'moment', 'jquery', 'Ps', 'daterange'], function(angular, mom
 						return conditions.hasObj(condition) > -1 ? true : false;
 					};
 				};
+				$scope.setClass = (i)=>{
+					var items = $scope.data.conditions;
+					if(items.length<6){
+						return true;	
+					};
+					var lines = Math.ceil(items.length/6);
+					if(Math.ceil((i+1)/6)<lines){
+						return true;		
+					};
+					return false;	
+				};
 			}
 		}
 	});
@@ -399,11 +410,9 @@ define(['angular', 'moment', 'jquery', 'Ps', 'daterange'], function(angular, mom
 			},
 			controller: function($scope, $element, $attrs) {
 				var conditions = $scope.model.conditions;
-				console.log(conditions);
 				var updateModel = (condition) => {
 					conditions.splice(0, conditions.length);
 					conditions.push(condition);
-					console.log($scope.model.conditions);
 				};
 				$scope.itemClick = (condition, e) => {
 					delete condition.$$hashKey;

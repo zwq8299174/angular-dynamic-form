@@ -302,7 +302,7 @@ define(['angular', 'moment', 'jquery', 'Ps', 'daterange'], function (angular, mo
 	appDirectives.directive('fltCheckbox', function () {
 		return {
 			template: function template($element, $attrs) {
-				var tpl = '<div class="filter-bar form-line flt-checkbox clearfix">\n\t\t\t\t\t<div class="form-left">\n\t\t\t\t\t\t<div class="form-tag">{{data.itemName}}</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class="form-right">\n\t\t\t\t\t\t<div class="form-item col-md-2 col-sm-12 col-xs-12" ng-repeat="condition in data.conditions">\n\t\t\t\t\t\t\t<div class="form-input transition-02">\n\t\t\t\t\t\t\t\t<label class="clearfix"><input class="pull-left" type="checkbox" name="{{condition.val}}" value="{{condition}}" ng-checked="isChecked(condition)" ng-click="itemClick(condition,$index)" ng-model="tmp[$index]" /><span class="pull-left">{{condition.display}}</span></label>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>';
+				var tpl = '<div class="filter-bar form-line flt-checkbox clearfix">\n\t\t\t\t\t<div class="form-left">\n\t\t\t\t\t\t<div class="form-tag">{{data.itemName}}</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class="form-right">\n\t\t\t\t\t\t<div class="form-item col-md-2 col-sm-12 col-xs-12" ng-repeat="condition in data.conditions" ng-class="{\'border\':setClass($index)}">\n\t\t\t\t\t\t\t<div class="form-input transition-02">\n\t\t\t\t\t\t\t\t<label class="clearfix"><input class="pull-left" type="checkbox" name="{{condition.val}}" value="{{condition}}" ng-checked="isChecked(condition)" ng-click="itemClick(condition,$index)" ng-model="tmp[$index]" /><span class="pull-left">{{condition.display}}</span></label>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>';
 				return tpl;
 			},
 			replace: true,
@@ -349,6 +349,17 @@ define(['angular', 'moment', 'jquery', 'Ps', 'daterange'], function (angular, mo
 						return conditions.hasObj(condition) > -1 ? true : false;
 					};
 				};
+				$scope.setClass = function (i) {
+					var items = $scope.data.conditions;
+					if (items.length < 6) {
+						return true;
+					};
+					var lines = Math.ceil(items.length / 6);
+					if (Math.ceil((i + 1) / 6) < lines) {
+						return true;
+					};
+					return false;
+				};
 			}
 		};
 	});
@@ -365,11 +376,9 @@ define(['angular', 'moment', 'jquery', 'Ps', 'daterange'], function (angular, mo
 			},
 			controller: function controller($scope, $element, $attrs) {
 				var conditions = $scope.model.conditions;
-				console.log(conditions);
 				var updateModel = function updateModel(condition) {
 					conditions.splice(0, conditions.length);
 					conditions.push(condition);
-					console.log($scope.model.conditions);
 				};
 				$scope.itemClick = function (condition, e) {
 					delete condition.$$hashKey;
