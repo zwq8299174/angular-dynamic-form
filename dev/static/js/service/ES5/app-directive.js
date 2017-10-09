@@ -351,8 +351,8 @@ define(['angular', 'moment', 'jquery', 'Ps', 'daterange'], function (angular, mo
 				};
 				$scope.setClass = function (i) {
 					var items = $scope.data.conditions;
-					if (items.length < 6) {
-						return true;
+					if (items.length <= 6) {
+						return false;
 					};
 					var lines = Math.ceil(items.length / 6);
 					if (Math.ceil((i + 1) / 6) < lines) {
@@ -366,7 +366,7 @@ define(['angular', 'moment', 'jquery', 'Ps', 'daterange'], function (angular, mo
 	appDirectives.directive('fltRadio', function () {
 		return {
 			template: function template($element, $attrs) {
-				var tpl = '<div class="filter-bar form-line flt-radio clearfix">\n\t\t\t\t\t<div class="form-left">\n\t\t\t\t\t\t<div class="form-tag">{{data.itemName}}</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class="form-right">\n\t\t\t\t\t\t<div class="form-item col-md-2 col-sm-12 col-xs-12" ng-repeat="condition in data.conditions">\n\t\t\t\t\t\t\t<div class="form-input transition-02">\n\t\t\t\t\t\t\t\t<label class="clearfix"><input class="pull-left" type="radio" name="{{data.itemkey}}" value="{{condition}}" ng-checked="isChecked(condition)" ng-click="itemClick(condition,$event)" ng-model="tmp[$index]" /><span class="pull-left">{{condition.display}}</span></label>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>';
+				var tpl = '<div class="filter-bar form-line flt-radio clearfix">\n\t\t\t\t\t<div class="form-left">\n\t\t\t\t\t\t<div class="form-tag">{{data.itemName}}</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class="form-right">\n\t\t\t\t\t\t<div class="form-item col-md-2 col-sm-12 col-xs-12" ng-repeat="condition in data.conditions" ng-class="{\'border\':setClass($index)}">\n\t\t\t\t\t\t\t<div class="form-input transition-02">\n\t\t\t\t\t\t\t\t<label class="clearfix"><input class="pull-left" type="radio" name="{{data.itemkey}}" value="{{condition}}" ng-checked="isChecked(condition)" ng-click="itemClick(condition,$event)" ng-model="tmp[$index]" /><span class="pull-left">{{condition.display}}</span></label>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>';
 				return tpl;
 			},
 			replace: true,
@@ -388,13 +388,24 @@ define(['angular', 'moment', 'jquery', 'Ps', 'daterange'], function (angular, mo
 					delete condition.$$hashKey;
 					return conditions.hasObj(condition) > -1 ? true : false;
 				};
+				$scope.setClass = function (i) {
+					var items = $scope.data.conditions;
+					if (items.length <= 6) {
+						return false;
+					};
+					var lines = Math.ceil(items.length / 6);
+					if (Math.ceil((i + 1) / 6) < lines) {
+						return true;
+					};
+					return false;
+				};
 			}
 		};
 	});
 	appDirectives.directive('fltCheckboxInput', function () {
 		return {
 			template: function template($element, $attrs) {
-				var tpl = '<div class="filter-bar form-line flt-checkbox-input clearfix">\n\t\t\t\t\t<div class="form-left">\n\t\t\t\t\t\t<div class="form-tag">{{data.itemName}}</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class="form-right">\n\t\t\t\t\t\t<div class="form-item col-md-2 col-sm-12 col-xs-12" ng-repeat="condition in data.conditions">\n\t\t\t\t\t\t\t<div class="form-input transition-02">\n\t\t\t\t\t\t\t\t<label class="clearfix"><input class="pull-left" type="checkbox" name="{{condition.val}}" value="{{condition}}" ng-checked="isChecked(condition)" ng-click="itemClick(condition,$index)" ng-model="tmp[$index]" /><span class="pull-left">{{condition.display}}</span></label>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class="form-item col-md-2 col-sm-12 col-xs-12">\n\t\t\t\t\t\t\t<div class="form-input transition-02 input-wrapper">\n\t\t\t\t\t\t\t\t<input type="number" class="number pull-left" ng-model="start" ng-change="inputChange()" placeholder="\u81EA\u5B9A\u4E49" />\n\t\t\t\t\t\t\t\t<i class="pull-left bridge">-</i>\n\t\t\t\t\t\t\t\t<input type="number" class="number pull-left" ng-model="end" ng-change="inputChange()" />\n\t\t\t\t\t\t\t\t<span class="pull-left unit">\u6B21/\u5468</span>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>';
+				var tpl = '<div class="filter-bar form-line flt-checkbox-input clearfix">\n\t\t\t\t\t<div class="form-left">\n\t\t\t\t\t\t<div class="form-tag">{{data.itemName}}</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class="form-right">\n\t\t\t\t\t\t<div class="form-item col-md-2 col-sm-12 col-xs-12" ng-repeat="condition in data.conditions" ng-class="{\'border\':setClass($index)}">\n\t\t\t\t\t\t\t<div class="form-input transition-02">\n\t\t\t\t\t\t\t\t<label class="clearfix"><input class="pull-left" type="checkbox" name="{{condition.val}}" value="{{condition}}" ng-checked="isChecked(condition)" ng-click="itemClick(condition,$index)" ng-model="tmp[$index]" /><span class="pull-left">{{condition.display}}</span></label>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class="form-item col-md-2 col-sm-12 col-xs-12" ng-class="{\'border\':setClass(data.conditions.length)}">\n\t\t\t\t\t\t\t<div class="form-input transition-02 input-wrapper">\n\t\t\t\t\t\t\t\t<input type="number" class="number pull-left" ng-model="start" ng-change="inputChange()" placeholder="\u81EA\u5B9A\u4E49" />\n\t\t\t\t\t\t\t\t<i class="pull-left bridge">-</i>\n\t\t\t\t\t\t\t\t<input type="number" class="number pull-left" ng-model="end" ng-change="inputChange()" />\n\t\t\t\t\t\t\t\t<span class="pull-left unit">\u6B21/\u5468</span>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>';
 				return tpl;
 			},
 			replace: true,
@@ -458,13 +469,24 @@ define(['angular', 'moment', 'jquery', 'Ps', 'daterange'], function (angular, mo
 						});
 					};
 				};
+				$scope.setClass = function (i) {
+					var items = $scope.data.conditions;
+					if (items.length <= 6) {
+						return false;
+					};
+					var lines = Math.ceil(items.length / 6);
+					if (Math.ceil((i + 1) / 6) < lines) {
+						return true;
+					};
+					return false;
+				};
 			}
 		};
 	});
 	appDirectives.directive('fltRadioDate', function () {
 		return {
 			template: function template($element, $attrs) {
-				var tpl = '<div class="filter-bar form-line flt-radio-date clearfix">\n\t\t\t\t\t<div class="form-left">\n\t\t\t\t\t\t<div class="form-tag">{{data.itemName}}</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class="form-right">\n\t\t\t\t\t\t<div class="form-item col-md-2 col-sm-12 col-xs-12" ng-repeat="condition in data.conditions">\n\t\t\t\t\t\t\t<div class="form-input transition-02">\n\t\t\t\t\t\t\t\t<label class="clearfix"><input class="pull-left" type="radio" name="{{data.itemkey}}" value="{{condition}}" ng-checked="isChecked(condition)" ng-click="itemClick(condition,$event)" ng-model="tmp[$index]" /><span class="pull-left">{{condition.display}}</span></label>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class="form-item col-md-2 col-sm-12 col-xs-12">\n\t\t\t\t\t\t\t<date-range-picker class="md" model="queryDate" apply="dateApply()" picker="picker" options="pickerOpt"></date-range-picker>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>';
+				var tpl = '<div class="filter-bar form-line flt-radio-date clearfix">\n\t\t\t\t\t<div class="form-left">\n\t\t\t\t\t\t<div class="form-tag">{{data.itemName}}</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class="form-right">\n\t\t\t\t\t\t<div class="form-item col-md-2 col-sm-12 col-xs-12" ng-repeat="condition in data.conditions">\n\t\t\t\t\t\t\t<div class="form-input transition-02">\n\t\t\t\t\t\t\t\t<label class="clearfix"><input class="pull-left" type="radio" name="{{data.itemkey}}" value="{{condition}}" ng-checked="isChecked(condition)" ng-click="itemClick(condition,$event)" ng-model="tmp[$index]" /><span class="pull-left">{{condition.display}}</span></label>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class="form-item col-md-2 col-sm-12 col-xs-12" ng-class="{\'border\':setClass(data.conditions.length)}">\n\t\t\t\t\t\t\t<date-range-picker class="md" model="queryDate" apply="dateApply()" picker="picker" options="pickerOpt"></date-range-picker>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>';
 				return tpl;
 			},
 			replace: true,
@@ -520,6 +542,17 @@ define(['angular', 'moment', 'jquery', 'Ps', 'daterange'], function (angular, mo
 						val: 0
 					});
 				});
+				$scope.setClass = function (i) {
+					var items = $scope.data.conditions;
+					if (items.length <= 6) {
+						return false;
+					};
+					var lines = Math.ceil(items.length / 6);
+					if (Math.ceil((i + 1) / 6) < lines) {
+						return true;
+					};
+					return false;
+				};
 			},
 			link: function link($scope, $element) {
 				var picker = $($element).find('.date-range-picker');
@@ -527,10 +560,10 @@ define(['angular', 'moment', 'jquery', 'Ps', 'daterange'], function (angular, mo
 			}
 		};
 	});
-	appDirectives.directive('fltSelect', function () {
+	appDirectives.directive('fltSelect', function ($timeout) {
 		return {
 			template: function template($element, $attrs) {
-				var tpl = '<div class="filter-bar form-line flt-select clearfix">\n\t\t\t\t\t\t<div class="form-left">\n\t\t\t\t\t\t\t<div class="form-tag">{{data.itemName}}</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class="form-right">\n\t\t\t\t\t\t\t<div class="form-item col-md-2 col-sm-12 col-xs-12">\n\t\t\t\t\t\t\t\t<div class="dropdown form-content select transition-02 ">\n\t\t\t\t\t\t\t\t\t<a href="#" class="dropdown-toggle clearfix" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">\n\t\t\t\t\t\t\t\t\t\t<span class="val pull-left">\u8BF7\u9009\u62E9</span>\n\t\t\t\t\t\t\t\t\t\t<div class="pull-right">\n\t\t\t\t\t\t\t\t\t\t\t<span class="caret icon-arrow"></span>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</a>\n\t\t\t\t\t\t\t\t\t<div class="dropdown-menu search animated fadeInUpSmall fast" role="menu">\n\t\t\t\t\t\t\t\t\t\t<ng-input class="sm" icon-left="&#xe623;" model="inputKey" type="text" placeholder="\u641C\u7D22\u7701\u4EFD"></ng-input>\n\t\t\t\t\t\t\t\t\t\t<div class="dropdown-list clearfix">\n\t\t\t\t\t\t\t\t\t\t\t<ul class="clearfix">\n\t\t\t\t\t\t\t\t\t\t\t\t<li role="presentation" ng-repeat="condition in data.conditions" ng-bind="condition.display" ng-click="itemClick($event,condition)" ng-show="drapListSearch(condition.display)" ng-class="{\'active\':isActive(condition)}"></li>\n\t\t\t\t\t\t\t\t\t\t\t</ul>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class="form-item col-md-10 col-sm-12 col-xs-12">\n\t\t\t\t\t\t\t\t<i class="item-tag" ng-repeat="item in model.conditions">{{item.display}}<em class="iconfont" ng-click="delCondition(item)">&#xe641;</em></i>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div>\n\t\t\t\t\t</div>';
+				var tpl = '<div class="filter-bar form-line flt-select clearfix">\n\t\t\t\t\t\t<div class="form-left">\n\t\t\t\t\t\t\t<div class="form-tag">{{data.itemName}}</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class="form-right">\n\t\t\t\t\t\t \t<div class="select-wrapper col-md-2 col-sm-12 col-xs-12">\n\t\t\t\t\t\t\t\t<div class="form-item" ng-class="{\'border\':wrapperTpm.length>0}">\n\t\t\t\t\t\t\t\t\t<div class="dropdown form-content select transition-02 ">\n\t\t\t\t\t\t\t\t\t\t<a href="#" class="dropdown-toggle clearfix" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">\n\t\t\t\t\t\t\t\t\t\t\t<span class="val pull-left">\u8BF7\u9009\u62E9</span>\n\t\t\t\t\t\t\t\t\t\t\t<div class="pull-right">\n\t\t\t\t\t\t\t\t\t\t\t\t<span class="caret icon-arrow"></span>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</a>\n\t\t\t\t\t\t\t\t\t\t<div class="dropdown-menu search animated fadeInUpSmall fast" role="menu">\n\t\t\t\t\t\t\t\t\t\t\t<ng-input class="sm" icon-left="&#xe623;" model="inputKey" type="text" placeholder="\u641C\u7D22\u7701\u4EFD"></ng-input>\n\t\t\t\t\t\t\t\t\t\t\t<div class="dropdown-list clearfix">\n\t\t\t\t\t\t\t\t\t\t\t\t<ul class="clearfix">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<li role="presentation" ng-repeat="condition in data.conditions" ng-bind="condition.display" ng-click="itemClick($event,condition)" ng-show="drapListSearch(condition.display)" ng-class="{\'active\':isActive(condition)}"></li>\n\t\t\t\t\t\t\t\t\t\t\t\t</ul>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class="form-item perch" ng-repeat="item in wrapperTpm"></div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class="result-items col-md-10 col-sm-12 col-xs-12">\n\t\t\t\t\t\t\t\t<div class="form-item">\n\t\t\t\t\t\t\t\t\t<i class="item-tag" ng-repeat="item in model.conditions">{{item.display}}<em class="iconfont" ng-click="delCondition(item)">&#xe641;</em></i>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div>\n\t\t\t\t\t</div>';
 				return tpl;
 			},
 			replace: true,
@@ -559,7 +592,9 @@ define(['angular', 'moment', 'jquery', 'Ps', 'daterange'], function (angular, mo
 					} else {
 						conditions.splice(idx, 1);
 					};
-					console.log($scope.model.conditions);
+					$timeout(function () {
+						$scope.setStyle();
+					}, 0);
 				};
 				$scope.itemClick = function (e, condition) {
 					if (conditions.hasObj(condition) > -1) {
@@ -572,6 +607,19 @@ define(['angular', 'moment', 'jquery', 'Ps', 'daterange'], function (angular, mo
 				};
 				$scope.delCondition = function (condition) {
 					conditions.splice(conditions.hasObj(condition), 1);
+					$timeout(function () {
+						$scope.setStyle();
+					}, 0);
+				};
+				$scope.setStyle = function () {
+					var resultEle = $($element).find('.result-items').outerHeight();
+					var line = (resultEle - 50) / 50;
+					console.log(line);
+					$scope.wrapperTpm = [];
+					for (var i = 0; i < line; i++) {
+						$scope.wrapperTpm.push('tmp');
+					};
+					console.log($scope.wrapperTpm);
 				};
 			}
 		};
@@ -599,6 +647,55 @@ define(['angular', 'moment', 'jquery', 'Ps', 'daterange'], function (angular, mo
 							val: $scope.inputVal
 						});
 					};
+				};
+			}
+		};
+	});
+	appDirectives.directive('ngTable', function () {
+		return {
+			template: function template($element, $attrs) {
+				return '<table class="table table-striped table-hover table-bordered ng-table">\n\t\t\t\t\t<thead>\n\t\t\t\t\t\t<tr>\n\t\t\t\t\t\t\t<th ng-repeat="col in opts.columns" repeat-finish="thFinish()">{{col.name}}</th>\n\t\t\t\t\t\t</tr>\n\t\t\t\t\t</thead>\n\t\t\t\t\t<tbody>\n\t\t\t\t\t</tbody>\n\t\t\t\t</table>';
+			},
+			replace: true,
+			scope: {
+				data: '=',
+				name: '=?',
+				dt: '=?',
+				opts: '='
+			},
+			controller: function controller($scope, $element, $attrs) {
+				$($element).addClass($attrs.cless);
+				var dtDefault = { //默认参数，可根据需要自行改动
+					fixedColumns: {
+						leftColumns: 2 //浮动列
+					},
+					scrollX: true, //滚动参数
+					//						order: [],//默认排序
+					order: [[1, "desc"]], //默认排序
+					buttons: {
+						buttons: [{
+							extend: 'copyHtml5',
+							className: 'btn-success btn-sm'
+						}, {
+							extend: 'excelHtml5',
+							title: $scope.name ? $scope.name : '数据表',
+							className: 'btn-success btn-sm'
+						}, {
+							extend: 'csvHtml5',
+							title: $scope.name ? $scope.name : '数据表',
+							className: 'btn-success btn-sm'
+						}]
+					}
+				};
+				var options = $.extend(true, {}, dtDefault, $scope.opts);
+				console.log(options);
+				var styles = $('<style>.dataTables_scroll .' + $attrs.cless + '{min-width:' + options.columns.length * 200 + 'px}</style>');
+				var initTable = function initTable() {
+					$scope.dt = $($element).dataTable(options);
+				};
+				$('head').append(styles);
+				$scope.thFinish = function () {
+					initTable();
 				};
 			}
 		};

@@ -6,7 +6,6 @@
 
 .dataTables_wrapper{overflow-x: scroll;overflow-y: hidden;margin-top:10px;}
 .top_nav .user-info{line-height:50px;margin:0 15px;}
-.dataTables_wrapper .table{min-width:1200px;}
 .dataTables_wrapper .dataTables_length{width: auto;}
 .dataTables_wrapper .dt-buttons{margin-right: 20px;}
 
@@ -17,6 +16,7 @@
 .form-line .form-right{width: calc(100% - 100px);float:right;}
 .form-line .form-input{width: calc(100% - 100px);float:left;}
 .form-line .form-item{border-right:1px solid #c3cbd0;padding-right: 0;padding-left: 0;}
+.form-line .form-item.perch{height:50px;}
 .form-line .form-item.border{border-bottom:1px solid #c3cbd0;}
 .form-line .form-item.btn-wrap{padding:0 15px;}
 .form-line .form-item:last-child{border-right:none;}
@@ -146,7 +146,8 @@
 
 .filter-bar .form-right .form-input{width: 100%;}
 .filter-bar .form-right .form-item:last-child{border-right: 1px solid #c3cbd0;}
-.flt-radio-date .date-range-picker-wrapper .daterangepicker{line-height:initial;min-width:682px;}
+.form-right .result-items .form-item:last-child{border-right:none;}
+.flt-radio-date .date-range-picker-wrapper .daterangepicker{line-height:initial;min-width:684px;}
 
 
 .form-line.flt-select .form-content{width:100%;}

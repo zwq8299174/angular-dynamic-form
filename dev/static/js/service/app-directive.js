@@ -78,7 +78,7 @@ define(['angular', 'moment', 'jquery', 'Ps', 'daterange'], function(angular, mom
 				var name = attrs.name ? 'name="' + attrs.name + '"' : '';
 				var model = attrs.model ? 'ng-model="' + attrs.model + '"' : '';
 				var focus = attrs.model ? 'ng-focus' : '';
-				var change = attrs.change ? 'ng-change="'+attrs.change+'"' : '';
+				var change = attrs.change ? 'ng-change="' + attrs.change + '"' : '';
 				if(attrs.valid) {
 					var required = attrs.required ? attrs.required : '';
 					var minlength = attrs.min ? attrs.min : '';
@@ -114,7 +114,7 @@ define(['angular', 'moment', 'jquery', 'Ps', 'daterange'], function(angular, mom
 						errorLable += '<span ng-show="' + attrs.form + '.' + attrs.name + '.$error.pattern" class="error-lable">您输入的格式不正确</span>';
 					}
 				};
-				return '<div class="clearfix default-input">' + iconLeft + iconRight + '<input  type="' + type + '" ' + valid + ' ' + model + ' ' + placeholder + ' ' + name + ' ' +change + ' ' + focus + ' autocomplete="off" />' + errorLable + '</div>'
+				return '<div class="clearfix default-input">' + iconLeft + iconRight + '<input  type="' + type + '" ' + valid + ' ' + model + ' ' + placeholder + ' ' + name + ' ' + change + ' ' + focus + ' autocomplete="off" />' + errorLable + '</div>'
 			},
 			replace: true,
 			controller: function($scope, $element, $attrs) {
@@ -371,16 +371,16 @@ define(['angular', 'moment', 'jquery', 'Ps', 'daterange'], function(angular, mom
 						return conditions.hasObj(condition) > -1 ? true : false;
 					};
 				};
-				$scope.setClass = (i)=>{
+				$scope.setClass = (i) => {
 					var items = $scope.data.conditions;
-					if(items.length<6){
-						return true;	
+					if(items.length <= 6) {
+						return false;
 					};
-					var lines = Math.ceil(items.length/6);
-					if(Math.ceil((i+1)/6)<lines){
-						return true;		
+					var lines = Math.ceil(items.length / 6);
+					if(Math.ceil((i + 1) / 6) < lines) {
+						return true;
 					};
-					return false;	
+					return false;
 				};
 			}
 		}
@@ -394,7 +394,7 @@ define(['angular', 'moment', 'jquery', 'Ps', 'daterange'], function(angular, mom
 						<div class="form-tag">{{data.itemName}}</div>
 					</div>
 					<div class="form-right">
-						<div class="form-item col-md-2 col-sm-12 col-xs-12" ng-repeat="condition in data.conditions">
+						<div class="form-item col-md-2 col-sm-12 col-xs-12" ng-repeat="condition in data.conditions" ng-class="{'border':setClass($index)}">
 							<div class="form-input transition-02">
 								<label class="clearfix"><input class="pull-left" type="radio" name="{{data.itemkey}}" value="{{condition}}" ng-checked="isChecked(condition)" ng-click="itemClick(condition,$event)" ng-model="tmp[$index]" /><span class="pull-left">{{condition.display}}</span></label>
 							</div>
@@ -422,6 +422,17 @@ define(['angular', 'moment', 'jquery', 'Ps', 'daterange'], function(angular, mom
 					delete condition.$$hashKey;
 					return conditions.hasObj(condition) > -1 ? true : false;
 				};
+				$scope.setClass = (i) => {
+					var items = $scope.data.conditions;
+					if(items.length <= 6) {
+						return false;
+					};
+					var lines = Math.ceil(items.length / 6);
+					if(Math.ceil((i + 1) / 6) < lines) {
+						return true;
+					};
+					return false;
+				};
 			}
 		}
 	});
@@ -434,12 +445,12 @@ define(['angular', 'moment', 'jquery', 'Ps', 'daterange'], function(angular, mom
 						<div class="form-tag">{{data.itemName}}</div>
 					</div>
 					<div class="form-right">
-						<div class="form-item col-md-2 col-sm-12 col-xs-12" ng-repeat="condition in data.conditions">
+						<div class="form-item col-md-2 col-sm-12 col-xs-12" ng-repeat="condition in data.conditions" ng-class="{'border':setClass($index)}">
 							<div class="form-input transition-02">
 								<label class="clearfix"><input class="pull-left" type="checkbox" name="{{condition.val}}" value="{{condition}}" ng-checked="isChecked(condition)" ng-click="itemClick(condition,$index)" ng-model="tmp[$index]" /><span class="pull-left">{{condition.display}}</span></label>
 							</div>
 						</div>
-						<div class="form-item col-md-2 col-sm-12 col-xs-12">
+						<div class="form-item col-md-2 col-sm-12 col-xs-12" ng-class="{'border':setClass(data.conditions.length)}">
 							<div class="form-input transition-02 input-wrapper">
 								<input type="number" class="number pull-left" ng-model="start" ng-change="inputChange()" placeholder="自定义" />
 								<i class="pull-left bridge">-</i>
@@ -512,6 +523,17 @@ define(['angular', 'moment', 'jquery', 'Ps', 'daterange'], function(angular, mom
 						});
 					};
 				};
+				$scope.setClass = (i) => {
+					var items = $scope.data.conditions;
+					if(items.length <= 6) {
+						return false;
+					};
+					var lines = Math.ceil(items.length / 6);
+					if(Math.ceil((i + 1) / 6) < lines) {
+						return true;
+					};
+					return false;
+				};
 			}
 		}
 	});
@@ -529,7 +551,7 @@ define(['angular', 'moment', 'jquery', 'Ps', 'daterange'], function(angular, mom
 								<label class="clearfix"><input class="pull-left" type="radio" name="{{data.itemkey}}" value="{{condition}}" ng-checked="isChecked(condition)" ng-click="itemClick(condition,$event)" ng-model="tmp[$index]" /><span class="pull-left">{{condition.display}}</span></label>
 							</div>
 						</div>
-						<div class="form-item col-md-2 col-sm-12 col-xs-12">
+						<div class="form-item col-md-2 col-sm-12 col-xs-12" ng-class="{'border':setClass(data.conditions.length)}">
 							<date-range-picker class="md" model="queryDate" apply="dateApply()" picker="picker" options="pickerOpt"></date-range-picker>
 						</div>
 					</div>
@@ -589,6 +611,17 @@ define(['angular', 'moment', 'jquery', 'Ps', 'daterange'], function(angular, mom
 						val: 0
 					});
 				});
+				$scope.setClass = (i) => {
+					var items = $scope.data.conditions;
+					if(items.length <= 6) {
+						return false;
+					};
+					var lines = Math.ceil(items.length / 6);
+					if(Math.ceil((i + 1) / 6) < lines) {
+						return true;
+					};
+					return false;
+				};
 			},
 			link: function($scope, $element, ) {
 				var picker = $($element).find('.date-range-picker');
@@ -596,7 +629,7 @@ define(['angular', 'moment', 'jquery', 'Ps', 'daterange'], function(angular, mom
 			}
 		}
 	});
-	appDirectives.directive('fltSelect', function() {
+	appDirectives.directive('fltSelect', function($timeout) {
 		return {
 			template: function($element, $attrs) {
 				var tpl =
@@ -605,26 +638,31 @@ define(['angular', 'moment', 'jquery', 'Ps', 'daterange'], function(angular, mom
 							<div class="form-tag">{{data.itemName}}</div>
 						</div>
 						<div class="form-right">
-							<div class="form-item col-md-2 col-sm-12 col-xs-12">
-								<div class="dropdown form-content select transition-02 ">
-									<a href="#" class="dropdown-toggle clearfix" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">
-										<span class="val pull-left">请选择</span>
-										<div class="pull-right">
-											<span class="caret icon-arrow"></span>
-										</div>
-									</a>
-									<div class="dropdown-menu search animated fadeInUpSmall fast" role="menu">
-										<ng-input class="sm" icon-left="&#xe623;" model="inputKey" type="text" placeholder="搜索省份"></ng-input>
-										<div class="dropdown-list clearfix">
-											<ul class="clearfix">
-												<li role="presentation" ng-repeat="condition in data.conditions" ng-bind="condition.display" ng-click="itemClick($event,condition)" ng-show="drapListSearch(condition.display)" ng-class="{'active':isActive(condition)}"></li>
-											</ul>
+						 	<div class="select-wrapper col-md-2 col-sm-12 col-xs-12">
+								<div class="form-item" ng-class="{'border':wrapperTpm.length>0}">
+									<div class="dropdown form-content select transition-02 ">
+										<a href="#" class="dropdown-toggle clearfix" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">
+											<span class="val pull-left">请选择</span>
+											<div class="pull-right">
+												<span class="caret icon-arrow"></span>
+											</div>
+										</a>
+										<div class="dropdown-menu search animated fadeInUpSmall fast" role="menu">
+											<ng-input class="sm" icon-left="&#xe623;" model="inputKey" type="text" placeholder="搜索省份"></ng-input>
+											<div class="dropdown-list clearfix">
+												<ul class="clearfix">
+													<li role="presentation" ng-repeat="condition in data.conditions" ng-bind="condition.display" ng-click="itemClick($event,condition)" ng-show="drapListSearch(condition.display)" ng-class="{'active':isActive(condition)}"></li>
+												</ul>
+											</div>
 										</div>
 									</div>
 								</div>
+								<div class="form-item perch" ng-repeat="item in wrapperTpm"></div>
 							</div>
-							<div class="form-item col-md-10 col-sm-12 col-xs-12">
-								<i class="item-tag" ng-repeat="item in model.conditions">{{item.display}}<em class="iconfont" ng-click="delCondition(item)">&#xe641;</em></i>
+							<div class="result-items col-md-10 col-sm-12 col-xs-12">
+								<div class="form-item">
+									<i class="item-tag" ng-repeat="item in model.conditions">{{item.display}}<em class="iconfont" ng-click="delCondition(item)">&#xe641;</em></i>
+								</div>
 							</div>
 						<div>
 					</div>`;
@@ -656,7 +694,9 @@ define(['angular', 'moment', 'jquery', 'Ps', 'daterange'], function(angular, mom
 					} else {
 						conditions.splice(idx, 1);
 					};
-					console.log($scope.model.conditions);
+					$timeout(() => {
+						$scope.setStyle();
+					}, 0);
 				};
 				$scope.itemClick = (e, condition) => {
 					if(conditions.hasObj(condition) > -1) {
@@ -669,6 +709,19 @@ define(['angular', 'moment', 'jquery', 'Ps', 'daterange'], function(angular, mom
 				};
 				$scope.delCondition = (condition) => {
 					conditions.splice(conditions.hasObj(condition), 1);
+					$timeout(() => {
+						$scope.setStyle();
+					}, 0);
+				};
+				$scope.setStyle = () => {
+					let resultEle = $($element).find('.result-items').outerHeight();
+					let line = (resultEle - 50) / 50;
+					console.log(line);
+					$scope.wrapperTpm = [];
+					for(let i = 0; i < line; i++) {
+						$scope.wrapperTpm.push('tmp');
+					};
+					console.log($scope.wrapperTpm);
 				};
 			}
 		}
@@ -707,6 +760,65 @@ define(['angular', 'moment', 'jquery', 'Ps', 'daterange'], function(angular, mom
 						});
 					};
 				};
+			}
+		}
+	});
+	appDirectives.directive('ngTable', function() {
+		return {
+			template: function($element, $attrs) {
+				return `<table class="table table-striped table-hover table-bordered ng-table">
+					<thead>
+						<tr>
+							<th ng-repeat="col in opts.columns" repeat-finish="thFinish()">{{col.name}}</th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>`;
+			},
+			replace: true,
+			scope: {
+				data: '=',
+				name:'=?',
+				dt:'=?',
+				opts:'='
+			},
+			controller: function($scope, $element, $attrs) {
+				$($element).addClass($attrs.cless);
+				let dtDefault = {//默认参数，可根据需要自行改动
+						fixedColumns: {
+							leftColumns: 2//浮动列
+						},
+						scrollX: true,//滚动参数
+//						order: [],//默认排序
+						order: [[ 1, "desc" ]],//默认排序
+						buttons: {
+							buttons: [{
+								extend: 'copyHtml5',
+								className: 'btn-success btn-sm'
+							}, {
+								extend: 'excelHtml5',
+								title: $scope.name?$scope.name:'数据表',
+								className: 'btn-success btn-sm',
+							}, {
+								extend: 'csvHtml5',
+								title: $scope.name?$scope.name:'数据表',
+								className: 'btn-success btn-sm'
+							}]
+						}
+					};
+				let options = $.extend(true,{},dtDefault,$scope.opts);
+				console.log(options);
+				let styles = $('<style>.dataTables_scroll .'+$attrs.cless+'{min-width:'+options.columns.length*200+'px}</style>');
+				let initTable = ()=>{
+					$scope.dt = $($element).dataTable(options);
+				};
+				$('head').append(styles);
+				$scope.thFinish = ()=>{
+					initTable();
+				};
+				
+				
 			}
 		}
 	});

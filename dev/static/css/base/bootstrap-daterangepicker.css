@@ -60,6 +60,8 @@
       border-bottom: initial;
       border-top: 6px solid #fff; }
   .daterangepicker.dropdown-menu {
+  	padding: 20px;
+  	font-size: 14px;
   	max-height: none;
   	overflow: visible;
     max-width: none;
