@@ -170,7 +170,7 @@ gulp.task('watchService',function() {
       presets: ['es2015']
     }))
 	.pipe(gulp.dest('./' + project + '/static/js/service/ES5/'));
-})
+});
 
 
 gulp.task('fontrev', function() {
