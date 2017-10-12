@@ -74,6 +74,10 @@ define(['angular', 'require', 'angular-route', 'appDirectives', 'appServices', '
 					'/demo': {
 						path: 'static/js/controller/demo.js?v=' + stamp,
 						controller: 'demoController'
+					},
+					'/data/table': {
+						path: 'static/js/controller/data-table.js?v=' + stamp,
+						controller: 'dataTableController'
 					}
 				};
 				//默认跳转到某个路由

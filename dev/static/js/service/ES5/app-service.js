@@ -8,11 +8,11 @@ define(['angular', 'js.cookie', 'baseSet', 'jquery', 'sweetalert', 'Ps'], functi
 	var appServices = angular.module('app.services', []);
 	appServices.service('login', function ($http, $rootScope) {
 		this.check = function (fn) {
-			if (userInfo != null && userInfo != undefined && userInfo != '' && userInfo.token) {
-				fn(userInfo.token);
-			} else {
-				window.location.href = 'login.html';
-			};
+			//			if(userInfo!=null&&userInfo!=undefined&&userInfo!=''&&userInfo.token){
+			fn(userInfo.token);
+			//			}else{
+			//				window.location.href='login.html';
+			//			};
 		};
 		this.logout = function (e) {
 			Cookies.remove('user');
@@ -41,7 +41,6 @@ define(['angular', 'js.cookie', 'baseSet', 'jquery', 'sweetalert', 'Ps'], functi
 					}
 				};
 				getModel = angular.merge({}, getModel, obj);
-				//				console.log(getModel);
 				$http(getModel).then(function (response) {
 					if (response.data.code == 0) {
 						suc(response.data.data);
@@ -223,6 +222,14 @@ define(['angular', 'js.cookie', 'baseSet', 'jquery', 'sweetalert', 'Ps'], functi
 				error: err
 			});
 		};
+		this.getDataTable = function (suc, com, err) {
+			appHttp.appGet({
+				url: baseSet.postServer + 'mockService/dataTable',
+				success: suc,
+				complete: com,
+				error: err
+			});
+		};
 	}]);
 	appServices.service('debug', function () {
 		$(document).off('click', '.icon-debug', function () {});
@@ -253,7 +260,6 @@ define(['angular', 'js.cookie', 'baseSet', 'jquery', 'sweetalert', 'Ps'], functi
 			var $bar = $list.find('.ps-scrollbar-y');
 			var listHiehgt = $list.find('ul').height();
 			var $input = $(this).find('input');
-			console.log($list.outerHeight());
 			if ($list.find('li').length == 0 || $list.outerHeight() < 205) return;
 			if ($input.length > 0) {
 				$input.on('input', function () {
@@ -261,7 +267,6 @@ define(['angular', 'js.cookie', 'baseSet', 'jquery', 'sweetalert', 'Ps'], functi
 				});
 			};
 			if ($list.find('.ps-scrollbar-y-rail').length > 0) {
-				console.log(666);
 				$list.perfectScrollbar('update');
 			} else {
 				$list.perfectScrollbar({

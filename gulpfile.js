@@ -5,8 +5,8 @@ var project = './dev';
 var projectDist = './dist';
 var version = '1.1';
 var prevVersion = '1.0';
-var postServer = 'http://117.50.8.212';
-var postPort = '9100';
+var postServer = 'http://niceweb.synology.me';
+var postPort = '9527';
 
 getWrapper = function(name) {
 	return "define(['angular'], function(angular) {\n" +
@@ -205,7 +205,7 @@ gulp.task('baseSet', function() {
 	var stream, name;
 	name = 'baseSet';
 	stream = gulp.src('./' + project + '/static/js/libs/default/baseSet.js')
-		.pipe(replace('\''+postServer+':'+postPort+'/\'', 'window.location.origin+\'/\''))
+		.pipe(replace('http://localhost:4567',postServer+':'+postPort))
 		.pipe(gulp.dest('./' + project + '/static/js/libs/default/'));
 	return stream;
 });
@@ -214,7 +214,7 @@ gulp.task('returnBaseSet', ['startJs'],function() {
 	var stream, name;
 	name = 'baseSet';
 	stream = gulp.src('./' + project + '/static/js/libs/default/baseSet.js')
-		.pipe(replace('window.location.origin+\'/\'','\''+postServer+':'+postPort+'/\''))
+		.pipe(replace(postServer+':'+postPort,'http://localhost:4567'))
 		.pipe(gulp.dest('./' + project + '/static/js/libs/default/'));
 	return stream;
 });
